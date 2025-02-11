@@ -2,8 +2,7 @@ name: FASTAPI CI
 
 on:
 
-  pull_request:
-    types: [opened, synchronize, reopened]
+  push:
     branches:
       - main
       - feat/get-book-by-Id
