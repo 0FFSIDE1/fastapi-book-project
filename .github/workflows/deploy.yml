@@ -1,0 +1,19 @@
+name: Deployment Pipeline
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    name: Deploy to Server
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Deploy Application
+        run: |
+          ssh OFFSDIE@your-server-ip "cd fastapi-book-project/main.py && git pull origin main && sudo systemctl restart app.service"
