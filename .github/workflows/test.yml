@@ -3,6 +3,7 @@ name: FASTAPI CI
 on:
 
   pull_request:
+    types: [opened, synchronize, reopened]
     branches:
       - main
 
@@ -35,3 +36,4 @@ jobs:
 
     - name: Run Tests
       run: pytest
+
