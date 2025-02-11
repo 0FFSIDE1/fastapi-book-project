@@ -16,4 +16,4 @@ jobs:
 
       - name: Deploy Application
         run: |
-          ssh OFFSDIE@SHA256:rNcW31Y4gBv4NMe0aXdDQufLCknTnafcBofjcn0lYho "cd fastapi-book-project/main.py && git pull origin main && sudo systemctl restart main.service"
+          ssh OFFSIDE@102.89.22.229 "cd fastapi-book-project/main.py && git pull origin main && sudo systemctl restart main.service"
