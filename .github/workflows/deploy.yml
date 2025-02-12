@@ -16,4 +16,4 @@ jobs:
 
       - name: Deploy Application
         run: |
-          ssh OFFSIDE@102.88.108.26 "cd fastapi-book-project/main.py && git pull origin main && sudo systemctl restart main.service"
+          ssh -p 2222 OFFSIDE@102.88.108.26 "cd fastapi-book-project/main.py && git pull origin main && sudo systemctl restart main.service"
