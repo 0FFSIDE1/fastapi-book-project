@@ -7,29 +7,30 @@ on:
 
 jobs:
   deploy:
-    name: Deploy to Server
+    name: Deploy to Vercel
     runs-on: ubuntu-latest
 
     steps:
+      # Step 1: Check out the code from GitHub
       - name: Checkout Code
         uses: actions/checkout@v3
 
-      - name: Set up SSH Key
-        run: |
-          mkdir -p ~/.ssh
-          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
-          chmod 600 ~/.ssh/id_rsa
-          ssh-keyscan -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
+      # Step 2: Set up Python environment
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.10 # Match the version your app uses
 
-      - name: Deploy Application
+      # Step 3: Install project dependencies
+      - name: Install Dependencies
         run: |
-          ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} << 'EOF'
-            cd ${{ secrets.WORK_DIR }}
-            git pull origin main
-            sudo systemctl restart main.service
-          EOF
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
 
-      - name: Clean Up
+      # Step 4: Deploy to Vercel using the Vercel CLI
+      - name: Deploy to Vercel
+        env: # Provide Vercel tokens as environment variables
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
         run: |
-          rm -f ~/.ssh/id_rsa
-          rm -f ~/.ssh/known_hosts
+          python -m pip install vercel
+          vercel --token $VERCEL_TOKEN --prod --confirm
